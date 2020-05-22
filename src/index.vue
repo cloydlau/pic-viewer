@@ -44,7 +44,9 @@ export default {
             })
           } else {
             this.$nextTick(() => {
-              this.viewer = new Viewer(this.$refs.viewer)
+              this.viewer = new Viewer(this.$refs.viewer, {
+                zIndex: 5000
+              })
             })
           }
         } else {
@@ -178,16 +180,12 @@ export default {
 }
 </style>
 
-<style lang="scss">
-/*.viewer-button {
+<!--<style lang="scss">
+.viewer-button {
   background-color: rgba(0, 0, 0, 1);
   height: 100px;
   right: -50px;
   top: -50px;
   width: 100px;
-}*/
-
-.viewer-container {
-  z-index: 5000 !important;
 }
-</style>
+</style>-->
