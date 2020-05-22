@@ -38,17 +38,15 @@ export default {
           } else {
             this.files = [newVal]
           }
-          if (this.viewer) {
-            this.$nextTick(() => {
+          this.$nextTick(() => {
+            if (this.viewer) {
               this.viewer.update()
-            })
-          } else {
-            this.$nextTick(() => {
+            } else {
               this.viewer = new Viewer(this.$refs.viewer, {
                 zIndex: 5000
               })
-            })
-          }
+            }
+          })
         } else {
           this.files = []
         }
@@ -132,6 +130,7 @@ export default {
       list-style: none;
       break-inside: avoid;
       margin-bottom: 15px;
+      cursor: pointer;
 
       & > img {
         width: 100%;
@@ -160,6 +159,7 @@ export default {
     & > li {
       list-style: none;
       display: inline-block;
+      cursor: pointer;
 
       & > img {
         height: 23px;
