@@ -1,6 +1,6 @@
 {
   "name": "pic-viewer",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "author": "cloydlau",
   "license": "MIT",
   "description": "开箱即用、支持表格嵌套的图片预览器",
