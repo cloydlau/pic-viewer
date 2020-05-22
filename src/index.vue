@@ -30,11 +30,9 @@ export default {
       handler (newVal, oldVal) {
         if (newVal) {
           if (newVal instanceof Array) {
-            this.files = this.objectKey ? newVal.filter(v => {
-              if (v[this.objectKey]) {
-                return v[this.objectKey]
-              }
-            }) : newVal
+            this.files = this.objectKey ?
+              Array.from(newVal, v => v[this.objectKey]).filter(v => v) :
+              newVal.filter(v => v)
           } else {
             this.files = [newVal]
           }
