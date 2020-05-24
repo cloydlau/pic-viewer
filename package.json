@@ -32,7 +32,6 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
-    "element-ui": "^2.13.2",
     "sass": "^1.26.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
