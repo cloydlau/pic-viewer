@@ -6,7 +6,7 @@
 ![预览时](./preview/previewing.png)
 
 
-### Intro / 介绍
+### Feature
 
 - √ viewerjs的vue版本 增加了预览前的外部展示 使其开箱即用
 - √ 支持自适应瀑布流展示、嵌套在表格内展示
@@ -15,10 +15,11 @@
 - √ 支持全局安装/单独引入
 
 
-### Installation / 安装
+### Installation
+![NPM](https://nodei.co/npm/pic-viewer.png)
 ```
 yarn add pic-viewer / npm i pic-viewer
-依赖项：vue
+Dependencies：vue
 
 全局引入：
 import PicViewer from 'pic-viewer'
@@ -30,6 +31,6 @@ components: { PicViewer }
 ```
 
 
-### Usage / 使用
+### Quick Start
 请参考/demo中极简示例
 

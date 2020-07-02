@@ -1,6 +1,6 @@
 {
   "name": "pic-viewer",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "author": "cloydlau",
   "license": "MIT",
   "description": "开箱即用、支持表格嵌套的图片预览器",
@@ -21,17 +21,17 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lib": "vue-cli-service build --target lib --name pic-viewer src/main.js",
-    "pub": "npm run lib && yrm use npm && npm publish && yrm use taobao"
+    "lib": "vue-cli-service build --target lib --name pic-viewer src/main.js"
   },
   "dependencies": {
     "core-js": "^3.6.0",
-    "viewerjs": "^1.5.0",
+    "viewerjs": "^1.6.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.3.0",
-    "@vue/cli-service": "~4.3.0",
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "element-ui": "^2.13.2",
     "sass": "^1.26.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"

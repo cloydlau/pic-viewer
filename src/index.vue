@@ -151,7 +151,7 @@ export default {
 
   & > ul.table-cell {
     padding: 0;
-    height: 23px;
+    height: 50px;
     margin: 0;
 
     & > li {
@@ -160,7 +160,7 @@ export default {
       cursor: pointer;
 
       & > img {
-        height: 23px;
+        height: 50px;
         margin-right: 10px;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
