@@ -21,6 +21,8 @@ $ yarn add pic-viewer
 
 **依赖项**：vue
 
+<hr/>
+
 **全局引入**
 ```js
 import PicViewer from 'pic-viewer'
@@ -35,24 +37,37 @@ components: { PicViewer }
 
 ### Quick Start
 
-**用在表格中**
+**自适应瀑布流布局**
+```html
+<PicViewer :value=""/>
+```
+
+**文档流布局**
+
+> 典型应用场景：表格
+
 ```html
 <el-table>
   <el-table-column label="图片">
     <template slot-scope="{ row }">
-      <PicViewer tableCell :value="row.img"/>
+      <PicViewer :waterfall="false" :value="row.img"/>
     </template>
   </el-table-column>
 </el-table>
 ```
 
-**用在其他地方（自适应瀑布流布局）**
+**手动调用预览 不在外部陈列展示**
 ```html
-<PicViewer :value=""/>
+<PicViewer :value="" v-show="false" ref="PicViewer"/>
+<el-button @click="()=>{$refs.PicViewer.preview(6)}">预览</el-button>
 ```
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- |
 | value | 图片链接 | String / Array[String] / Array[Object] | | |
 | objectKey | 如果数组元素为对象 需要指定图片对应的key | String | | |
-| tableCell | 是否用于表格中 | Boolean | | false |
+| waterfall | 是否瀑布流布局 | Boolean | | true |
+
+| 方法名 | 说明 | 参数 |
+| --- | --- | --- |
+| preview | 手动预览 | value数组下标（value类型为Array时需要 默认0） |

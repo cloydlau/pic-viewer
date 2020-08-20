@@ -1,6 +1,7 @@
 <template>
-  <el-dialog :visible.sync="showDialog" :close-on-click-modal="false" title="图片预览">
-    <h2>用在表格中：</h2>
+  <el-dialog visible :close-on-click-modal="false" :show-close="false" title="pic-viewer">
+    <PicViewer :value="value"/>
+
     <el-table :data="[
                 {img:this.value,name:'多个（数组）'},
                 {img:this.value&&this.value[0],name:'单个（字符串/数组）'}
@@ -13,12 +14,13 @@
       <el-table-column label="数量" prop="name"/>
       <el-table-column label="图片">
         <template slot-scope="{row}">
-          <PicViewer tableCell :value="row.img"/>
+          <PicViewer :waterfall="false" :value="row.img"/>
         </template>
       </el-table-column>
     </el-table>
-    <h2 style="margin-top:50px;">用在其他地方（自适应瀑布流布局）：</h2>
-    <PicViewer :value="value"/>
+
+    <PicViewer :value="value" v-show="false" ref="PicViewer"/>
+    <el-button @click="()=>{$refs.PicViewer.preview(0)}">预览</el-button>
   </el-dialog>
 </template>
 
@@ -32,7 +34,6 @@
 
 
 //import PicViewer from '../src/index'
-//import { PicViewer } from '../dist/pic-viewer.umd'
 
 export default {
   //components: { PicViewer },
@@ -47,7 +48,6 @@ export default {
         'https://placem.at/places?random=1&txt=0&w=1600&h=1000',
         'https://placem.at/places?random=1&txt=0&w=1260&h=540',
       ],
-      showDialog: true
     }
   },
 }

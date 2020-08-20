@@ -1,10 +1,10 @@
 <template>
   <div class="pic-viewer">
     <ul ref="viewer" :class="{
-        'table-cell': tableCell,
-        'waterfall': !tableCell
+        'normal-flow': !waterfall || tableCell,
+        'waterfall': !tableCell && waterfall
       }">
-      <li v-for="(v,i) of files" :key="i">
+      <li v-for="(v,i) of files" :key="i" class="curl-on-hover">
         <img :src="v" alt="">
       </li>
     </ul>
@@ -22,7 +22,11 @@ export default {
       validator: value => ['String', 'Array', 'Null'].includes(({}).toString.call(value).slice(8, -1)),
     },
     objectKey: String,
-    tableCell: Boolean,
+    tableCell: Boolean, //todo: deprecated
+    waterfall: {
+      type: Boolean,
+      default: true
+    },
   },
   watch: {
     value: {
@@ -57,11 +61,30 @@ export default {
       viewer: null
     }
   },
+  methods: {
+    preview (i = 0) {
+      if (this.viewer) {
+        if (this.value) {
+          if (this.value instanceof Array) {
+            if (this.value.length === 0) {
+              console.error('[pic-viewer] value为空')
+            } else if (i < 0 || i > this.value.length - 1) {
+              console.error('[pic-viewer] preview参数越界')
+            } else {
+              this.viewer.view(i)
+            }
+          } else {
+            this.viewer.show()
+          }
+        }
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@keyframes bob {
+/*@keyframes bob {
   0% {
     transform: translateY(-8px);
   }
@@ -77,41 +100,33 @@ export default {
   100% {
     transform: translateY(-8px);
   }
-}
+}*/
 
-@keyframes jello {
-  from,
-  11.1%,
-  to {
-    transform: translate3d(0, 0, 0);
+.curl-on-hover {
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+
+  &:before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    height: 0;
+    width: 0;
+    bottom: 0;
+    right: 0;
+    background: white;
+    //IE9
+    background: linear-gradient(315deg, white 45%, #aaa 50%, #ccc 56%, white 80%);
+    box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
+    transition-duration: 0.3s;
+    transition-property: width, height;
   }
 
-  22.2% {
-    transform: skewX(-12.5deg) skewY(-12.5deg);
-  }
-
-  33.3% {
-    transform: skewX(6.25deg) skewY(6.25deg);
-  }
-
-  44.4% {
-    transform: skewX(-3.125deg) skewY(-3.125deg);
-  }
-
-  55.5% {
-    transform: skewX(1.5625deg) skewY(1.5625deg);
-  }
-
-  66.6% {
-    transform: skewX(-0.78125deg) skewY(-0.78125deg);
-  }
-
-  77.7% {
-    transform: skewX(0.390625deg) skewY(0.390625deg);
-  }
-
-  88.8% {
-    transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+  &:hover:before, &:focus:before, &:active:before {
+    width: 25px;
+    height: 25px;
   }
 }
 
@@ -121,7 +136,7 @@ export default {
     margin: 0 auto;
     position: relative;
     column-width: 200px;
-    column-gap: 20px;
+    column-gap: 1rem;
 
     & > li {
       width: 100%;
@@ -133,11 +148,11 @@ export default {
       & > img {
         width: 100%;
         height: 100%;
+        vertical-align: middle;
         border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       }
 
-      &:hover {
+      /*&:hover {
         animation-name: bob-float, bob;
         animation-duration: .3s, 1.5s;
         animation-delay: 0s, .3s;
@@ -145,11 +160,11 @@ export default {
         animation-iteration-count: 1, infinite;
         animation-fill-mode: forwards;
         animation-direction: normal, alternate;
-      }
+      }*/
     }
   }
 
-  & > ul.table-cell {
+  & > ul.normal-flow {
     padding: 0;
     height: 50px;
     margin: 0;
@@ -158,20 +173,12 @@ export default {
       list-style: none;
       display: inline-block;
       cursor: pointer;
+      margin: 0 10px 10px 0;
 
       & > img {
         height: 50px;
-        margin-right: 10px;
+        vertical-align: middle;
         border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      }
-
-      &:hover {
-        animation-name: jello;
-        transform-origin: center;
-        animation-duration: 1s;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
       }
     }
   }
