@@ -1,9 +1,10 @@
 # pic-viewer / 图片预览
 
-### 预览前 / before preview
-![预览前](./preview/outside.png)
-### 预览时 / previewing
-![预览时](./preview/previewing.png)
+![before preview](./preview/outside.png)
+
+<hr/>
+
+![previewing](./preview/previewing.png)
 
 ### Feature
 
@@ -19,32 +20,33 @@
 $ yarn add pic-viewer
 ```
 
-**依赖项**：vue
+**Dependencies**：vue
 
 <hr/>
 
-**全局引入**
-```js
-import PicViewer from 'pic-viewer'
-Vue.use(PicViewer)
-```
-
-**局部引入**
 ```js
 import { PicViewer } from 'pic-viewer'
 components: { PicViewer }
 ```
 
+**Globally:**
+```js
+import PicViewer from 'pic-viewer'
+Vue.use(PicViewer)
+```
+
 ### Quick Start
 
-**自适应瀑布流布局**
+**Waterfall Layout:**
 ```html
 <PicViewer :value=""/>
 ```
 
-**文档流布局**
+**Normal Flow Layout:**
 
-> 典型应用场景：表格
+> Typically used in tables
+
+Here's an example for element-ui:
 
 ```html
 <el-table>
@@ -56,18 +58,18 @@ components: { PicViewer }
 </el-table>
 ```
 
-**手动调用预览 不在外部陈列展示**
+**Preview manually, no external display:**
 ```html
 <PicViewer :value="" v-show="false" ref="PicViewer"/>
-<el-button @click="()=>{$refs.PicViewer.preview(6)}">预览</el-button>
+<button @click="() => { $refs.PicViewer.preview(6) }">preview</button>
 ```
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| Attribute | Description | Type | Options | Default |
 | --- | --- | --- | --- | --- |
-| value | 图片链接 | String / Array[String] / Array[Object] | | |
-| objectKey | 如果数组元素为对象 需要指定图片对应的key | String | | |
-| waterfall | 是否瀑布流布局 | Boolean | | true |
+| value | img link[s] | String / Array[String] / Array[Object] | | |
+| objectKey | if type of value is Array[Object], you need to specify the img key of object | String | | |
+| waterfall | whether the layout is waterfall | Boolean | | true |
 
-| 方法名 | 说明 | 参数 |
+| Method | Description | Parameters |
 | --- | --- | --- |
-| preview | 手动预览 | value数组下标（value类型为Array时需要 默认0） |
+| preview | preview manually | index of value array (default: 0) |
