@@ -50,7 +50,7 @@ Here's an example for element-ui:
 
 ```html
 <el-table>
-  <el-table-column label="图片">
+  <el-table-column>
     <template slot-scope="{ row }">
       <PicViewer :waterfall="false" :value="row.img"/>
     </template>
