@@ -68,7 +68,7 @@ Here's an example for element-ui:
 | --- | --- | --- | --- | --- |
 | value | img link[s] | String / Array[String] / Array[Object] | | |
 | objectKey | if type of value is Array[Object], you need to specify the img key of object | String | | |
-| waterfall | whether the layout is waterfall | Boolean | | true |
+| waterfall | whether using waterfall layout | Boolean | | true |
 
 | Method | Description | Parameters |
 | --- | --- | --- |
