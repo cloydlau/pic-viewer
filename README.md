@@ -6,7 +6,7 @@
 
 ![previewing](./preview/previewing.png)
 
-### Feature
+### Features
 
 - √ viewerjs的vue版本 增加了预览前的外部展示 使其开箱即用
 - √ 支持自适应瀑布流展示、嵌套在表格内展示
