@@ -70,6 +70,8 @@ Here's an example for element-ui:
 | objectKey | if type of value is Array[Object], you need to specify the img key of object | String | | |
 | waterfall | whether using waterfall layout | Boolean | | true |
 
+<hr/>
+
 | Method | Description | Parameters |
 | --- | --- | --- |
 | preview | preview manually | index of value array (default: 0) |
