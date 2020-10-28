@@ -22,16 +22,15 @@ $ yarn add pic-viewer
 
 **Dependencies**：vue
 
-<hr/>
-
-```js
-import { PicViewer } from 'pic-viewer'
-components: { PicViewer }
-```
-
-**Globally:**
 ```js
 import PicViewer from 'pic-viewer'
+
+// 组件内引入
+components: { PicViewer }
+// ≤0.2.7
+components: { PicViewer.PicViewer }
+
+// 全局引入
 Vue.use(PicViewer)
 ```
 

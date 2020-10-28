@@ -12,7 +12,12 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-export default {
-  install,
+// @ts-ignore
+PicViewer.install = install
+
+export default PicViewer
+
+// todo: deprecated
+export {
   PicViewer
 }
