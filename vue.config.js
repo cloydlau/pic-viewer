@@ -17,7 +17,7 @@ module.exports = {
       library: 'pic-viewer',
       libraryTarget: 'umd',
       umdNamedDefine: true,
-      libraryExport: 'default'
+      //libraryExport: 'default'
     }
   }
 }
