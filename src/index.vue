@@ -4,8 +4,10 @@
         'normal-flow': !waterfall || tableCell,
         'waterfall': !tableCell && waterfall
       }">
-      <li v-for="(v,i) of files" :key="i" class="curl-on-hover">
-        <img :src="v" alt="">
+      <li v-for="(v,i) of files" :key="i">
+        <div :class="v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover'">
+          <img :src="v" alt="">
+        </div>
       </li>
     </ul>
   </div>
@@ -130,6 +132,43 @@ export default {
   }
 }
 
+.normal-flow .curl-on-hover {
+  &:hover:before, &:focus:before, &:active:before {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.reveal-on-hover {
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-color: rgba(32, 152, 209, .1);
+    border-style: solid;
+    border-width: 0;
+    transition-property: border-width;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
+  }
+
+  &:hover:before, &:focus:before, &:active:before {
+    transform: translateY(0);
+    border-width: 4px;
+  }
+}
+
 .pic-viewer {
   & > ul.waterfall {
     padding: 15px;
@@ -142,14 +181,18 @@ export default {
       width: 100%;
       list-style: none;
       break-inside: avoid;
-      margin-bottom: 15px;
+      // margin-bottom: 15px; // 会导致底部错位
       cursor: pointer;
 
-      & > img {
-        width: 100%;
-        height: 100%;
-        vertical-align: middle;
-        border-radius: 5px;
+      & > div {
+        margin-bottom: 15px;
+
+        & > img {
+          width: 100%;
+          height: 100%;
+          vertical-align: middle;
+          //border-radius: 5px;
+        }
       }
 
       /*&:hover {
@@ -175,10 +218,10 @@ export default {
       cursor: pointer;
       margin: 0 10px 10px 0;
 
-      & > img {
+      & > div > img {
         height: 50px;
         vertical-align: middle;
-        border-radius: 5px;
+        //border-radius: 5px;
       }
     }
   }

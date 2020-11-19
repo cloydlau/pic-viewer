@@ -2,7 +2,7 @@
 
 ![before preview](./preview/outside.png)
 
-<hr/>
+<br/>
 
 ![previewing](./preview/previewing.png)
 
@@ -20,15 +20,13 @@
 $ yarn add pic-viewer
 ```
 
-**Dependencies**：vue
+Dependencies：vue
 
 ```js
 import PicViewer from 'pic-viewer'
 
 // 组件内引入
 components: { PicViewer }
-// ≤0.2.7
-components: { PicViewer.PicViewer }
 
 // 全局引入
 Vue.use(PicViewer)
@@ -65,11 +63,11 @@ Here's an example for element-ui:
 
 | Attribute | Description | Type | Options | Default |
 | --- | --- | --- | --- | --- |
-| value | img link[s] | String / Array[String] / Array[Object] | | |
-| objectKey | if type of value is Array[Object], you need to specify the img key of object | String | | |
-| waterfall | whether using waterfall layout | Boolean | | true |
+| value | img link[s] | string / array[string] / array[object] | | |
+| objectKey | if type of value is array[object], you need to specify the img key of object | string | | |
+| waterfall | whether using waterfall layout | boolean | | true |
 
-<hr/>
+<br/>
 
 | Method | Description | Parameters |
 | --- | --- | --- |
