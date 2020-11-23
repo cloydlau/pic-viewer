@@ -170,6 +170,10 @@ export default {
 }
 
 .pic-viewer {
+  img {
+    object-fit: cover;
+  }
+
   & > ul.waterfall {
     padding: 15px;
     margin: 0 auto;
