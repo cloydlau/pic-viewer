@@ -1,8 +1,8 @@
 <template>
-  <div class="pic-viewer" v-if="files&&files.length">
+  <div class="pic-viewer" v-if="files.length">
     <ul ref="viewer" :class="{
         'normal-flow': !waterfall || tableCell,
-        'waterfall': !tableCell && waterfall
+        'waterfall': !tableCell && files.length>1 && waterfall
       }">
       <li v-for="(v,i) of files" :key="i">
         <div :class="v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover'">
@@ -42,15 +42,17 @@ export default {
           } else {
             this.files = [newVal]
           }
-          this.$nextTick(() => {
-            if (this.viewer) {
-              this.viewer.update()
-            } else {
-              this.viewer = new Viewer(this.$refs.viewer, {
-                zIndex: 5000
-              })
-            }
-          })
+          if (this.files.length) {
+            this.$nextTick(() => {
+              if (this.viewer) {
+                this.viewer.update()
+              } else {
+                this.viewer = new Viewer(this.$refs.viewer, {
+                  zIndex: 5000
+                })
+              }
+            })
+          }
         } else {
           this.files = []
         }
@@ -171,19 +173,29 @@ export default {
 
 .pic-viewer {
   img {
-    object-fit: cover;
+    vertical-align: middle; //fix: 图片下方空隙
+    object-fit: cover; //保持图片比例
+    max-width: 100%;
+  }
+
+  & > ul {
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
+
+    & > li {
+      list-style: none;
+    }
   }
 
   & > ul.waterfall {
     padding: 15px;
-    margin: 0 auto;
     position: relative;
     column-width: 200px;
     column-gap: 1rem;
 
     & > li {
       width: 100%;
-      list-style: none;
       break-inside: avoid;
       // margin-bottom: 15px; // 会导致底部错位
       cursor: pointer;
@@ -194,7 +206,6 @@ export default {
         & > img {
           width: 100%;
           height: 100%;
-          vertical-align: middle;
           //border-radius: 5px;
         }
       }
