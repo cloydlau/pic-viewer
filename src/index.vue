@@ -1,5 +1,5 @@
 <template>
-  <div class="pic-viewer">
+  <div class="pic-viewer" v-if="files&&files.length">
     <ul ref="viewer" :class="{
         'normal-flow': !waterfall || tableCell,
         'waterfall': !tableCell && waterfall
