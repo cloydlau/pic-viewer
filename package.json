@@ -24,15 +24,14 @@
     "lib": "vue-cli-service build --target lib --name pic-viewer src/main.js"
   },
   "dependencies": {
-    "core-js": "^3.7.0",
-    "viewerjs": "^1.8.0",
+    "viewerjs": "^1.9.0",
     "vue": "^2.6.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-service": "^4.5.0",
-    "element-ui": "^2.14.1",
-    "sass": "^1.29.0",
+    "element-ui": "^2.15.0",
+    "sass": "^1.32.0",
     "sass-loader": "^10.1.0",
     "vue-template-compiler": "^2.6.12"
   }
