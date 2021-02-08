@@ -1,10 +1,10 @@
 # pic-viewer / 图片预览
 
-![before preview](./preview/outside.png)
+![before preview](./outside.png)
 
 <br/>
 
-![previewing](./preview/previewing.png)
+![previewing](./previewing.png)
 
 ### Features
 
