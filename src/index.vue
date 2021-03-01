@@ -1,6 +1,7 @@
 <template>
   <div class="pic-viewer" v-if="files.length">
     <ul ref="viewer" :class="{
+        'single': files.length === 1,
         'normal-flow': !waterfall || tableCell,
         'waterfall': !tableCell && files.length>1 && waterfall
       }">
@@ -16,6 +17,9 @@
 <script>
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'viewerjs'
+import { name } from '../package.json'
+
+const prefix = `[${name}] `
 
 export default {
   name: 'PicViewer',
@@ -71,9 +75,9 @@ export default {
         if (this.value) {
           if (this.value instanceof Array) {
             if (this.value.length === 0) {
-              console.error('[pic-viewer] value为空')
+              console.error(prefix + 'value为空')
             } else if (i < 0 || i > this.value.length - 1) {
-              console.error('[pic-viewer] preview参数越界')
+              console.error(prefix + 'preview参数越界')
             } else {
               this.viewer.view(i)
             }
@@ -176,6 +180,10 @@ export default {
     vertical-align: middle; //fix: 图片下方空隙
     object-fit: cover; //保持图片比例
     max-width: 100%;
+  }
+
+  .single img {
+    height: 148px;
   }
 
   & > ul {

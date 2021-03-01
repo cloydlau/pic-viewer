@@ -1,15 +1,23 @@
 <template>
   <el-dialog visible :close-on-click-modal="false" :show-close="false" title="pic-viewer">
-    <PicViewer :value="value"/>
+    <h2>单张</h2>
+    <PicViewer :value="value[0]"/>
+    <br/><br/>
 
-    <el-table :data="[
-                {img:this.value,name:'多个（数组）'},
-                {img:this.value&&this.value[0],name:'单个（字符串/数组）'}
-              ]"
-              border
-              fit
-              stripe
-              highlight-current-row
+    <h2>多张（瀑布流）</h2>
+    <PicViewer :value="value"/>
+    <br/><br/>
+
+    <h2>表格内</h2>
+    <el-table
+      :data="[
+        {img:this.value,name:'多个（数组）'},
+        {img:this.value&&this.value[0],name:'单个（字符串/数组）'}
+      ]"
+      border
+      fit
+      stripe
+      highlight-current-row
     >
       <el-table-column label="数量" prop="name"/>
       <el-table-column label="图片">
@@ -31,7 +39,6 @@
  * @param {objectKey} String - 如果数组元素为对象 需要传入对应图片地址的属性
  * @param {tableCell} Boolean - 是否用于表格中 默认false
  */
-
 
 //import PicViewer from '../src/index'
 

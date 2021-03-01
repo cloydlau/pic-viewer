@@ -25,7 +25,7 @@ Dependencies：vue
 ```js
 import PicViewer from 'pic-viewer'
 
-// 组件内引入
+// 局部引入
 components: { PicViewer }
 
 // 全局引入

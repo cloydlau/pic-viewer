@@ -6,8 +6,8 @@
   "description": "开箱即用、支持表格嵌套的图片预览器",
   "keywords": [
     "图片预览",
-    "picture viewer",
-    "image previewer",
+    "image viewer",
+    "picture previewer",
     "viewerjs",
     "vue-viewerjs",
     "自适应瀑布流"
@@ -16,7 +16,7 @@
   "main": "dist/pic-viewer.umd.min.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/cloydlau/pic-viewer"
   },
   "scripts": {
     "dev": "vue-cli-service serve",
@@ -24,15 +24,15 @@
     "lib": "vue-cli-service build --target lib --name pic-viewer src/main.js"
   },
   "dependencies": {
-    "viewerjs": "^1.9.0",
-    "vue": "^2.6.12"
+    "viewerjs": "1",
+    "vue": "2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.0",
-    "@vue/cli-service": "^4.5.0",
-    "element-ui": "^2.15.0",
-    "sass": "^1.32.0",
-    "sass-loader": "^10.1.0",
-    "vue-template-compiler": "^2.6.12"
+    "@vue/cli-plugin-babel": "4",
+    "@vue/cli-service": "4",
+    "element-ui": "2",
+    "sass": "1",
+    "sass-loader": "10",
+    "vue-template-compiler": "2"
   }
 }
