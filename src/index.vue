@@ -180,6 +180,7 @@ export default {
     vertical-align: middle; //fix: 图片下方空隙
     object-fit: cover; //保持图片比例
     max-width: 100%;
+    cursor: pointer;
   }
 
   .single img {
@@ -206,7 +207,6 @@ export default {
       width: 100%;
       break-inside: avoid;
       // margin-bottom: 15px; // 会导致底部错位
-      cursor: pointer;
 
       & > div {
         margin-bottom: 15px;
@@ -238,7 +238,6 @@ export default {
     & > li {
       list-style: none;
       display: inline-block;
-      cursor: pointer;
       margin: 0 10px 10px 0;
 
       & > div > img {
