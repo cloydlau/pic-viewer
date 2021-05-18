@@ -1,6 +1,6 @@
 {
   "name": "pic-viewer",
-  "version": "0.2.12",
+  "version": "0.3.0",
   "author": "cloydlau",
   "license": "MIT",
   "description": "开箱即用、支持表格嵌套的图片预览器",
@@ -13,26 +13,43 @@
     "自适应瀑布流"
   ],
   "private": false,
-  "main": "dist/pic-viewer.umd.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/cloydlau/pic-viewer"
   },
+  "main": "dist/pic-viewer.umd.js",
+  "module": "./dist/pic-viewer.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/pic-viewer.es.js",
+      "require": "./dist/pic-viewer.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lib": "vue-cli-service build --target lib --name pic-viewer src/main.js"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "clean": "rd /s /q .\\node_modules",
+    "ri": "npm run clean && pnpm i"
   },
   "dependencies": {
-    "viewerjs": "1",
-    "vue": "2"
+    "kayran": "^0.1.1",
+    "lodash-es": "^4.17.21",
+    "qrcode": "^1.4.4",
+    "viewerjs": "^1.9.0"
+  },
+  "peerDependencies": {
+    "element-ui": "^2.15.1",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4",
-    "@vue/cli-service": "4",
-    "element-ui": "2",
-    "sass": "1",
-    "sass-loader": "10",
-    "vue-template-compiler": "2"
+    "element-ui": "^2.15.1",
+    "sass": "^1.32.13",
+    "typescript": "^4.2.4",
+    "vite": "2.2.4",
+    "vite-plugin-vue2": "^1.5.1",
+    "vite-plugin-windicss": "^0.15.10",
+    "vue": "^2.6.12"
   }
 }

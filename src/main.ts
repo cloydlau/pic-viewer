@@ -16,8 +16,3 @@ if (typeof window !== 'undefined' && window.Vue) {
 PicViewer.install = install
 
 export default PicViewer
-
-// todo: deprecated
-export {
-  PicViewer
-}

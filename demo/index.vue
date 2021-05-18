@@ -1,11 +1,11 @@
 <template>
   <el-dialog visible :close-on-click-modal="false" :show-close="false" title="pic-viewer">
     <h2>单张</h2>
-    <PicViewer :value="value[0]"/>
+    <PicViewer :value="value[0]" qrcode="auto"/>
     <br/><br/>
 
     <h2>多张（瀑布流）</h2>
-    <PicViewer :value="value"/>
+    <PicViewer :value="value" :qrcode="false"/>
     <br/><br/>
 
     <h2>表格内</h2>
@@ -54,6 +54,7 @@ export default {
         'https://placem.at/things?random=1&txt=0&w=800&h=600',
         'https://placem.at/places?random=1&txt=0&w=1600&h=1000',
         'https://placem.at/places?random=1&txt=0&w=1260&h=540',
+        '123'
       ],
     }
   },

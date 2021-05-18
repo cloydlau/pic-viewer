@@ -26,6 +26,13 @@ vue.config.js
 babel.config.js
 .browserslistrc
 tsconfig.json
-.env.development
-/preview/
+/.env.development
+/preview*.*
 demo/
+coverage/
+tests/
+.gitattributes
+.gitignore
+vite.config.ts
+windi.config.ts
+/dist/*.html

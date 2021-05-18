@@ -1,13 +1,16 @@
 <template>
   <div class="pic-viewer" v-if="files.length">
-    <ul ref="viewer" :class="{
+    <ul
+      ref="viewer"
+      :class="{
         'single': files.length === 1,
-        'normal-flow': !waterfall || tableCell,
-        'waterfall': !tableCell && files.length>1 && waterfall
-      }">
-      <li v-for="(v,i) of files" :key="i">
+        'normal-flow': !Waterfall,
+        'waterfall': files.length>1 && Waterfall
+      }"
+    >
+      <li v-for="(v,i) of files" :key="i" class="item">
         <div :class="v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover'">
-          <img :src="v" alt="">
+          <img :src="v" alt="" referrerpolicy="no-referrer">
         </div>
       </li>
     </ul>
@@ -18,6 +21,12 @@
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'viewerjs'
 import { name } from '../package.json'
+import QRCode from 'qrcode'
+import { validator, typeOf, awaitFor } from 'kayran'
+const { base64, url } = validator
+import { getFinalProp } from './utils'
+import globalProps from './config'
+import { isPlainObject } from 'lodash-es'
 
 const prefix = `[${name}] `
 
@@ -25,26 +34,42 @@ export default {
   name: 'PicViewer',
   props: {
     value: {
-      validator: value => ['String', 'Array', 'Null'].includes(({}).toString.call(value).slice(8, -1)),
+      validator: value => ['string', 'array', 'null'].includes(typeOf(value)),
     },
     objectKey: String,
-    tableCell: Boolean, //todo: deprecated
     waterfall: {
-      type: Boolean,
-      default: true
+      validator: value => '' === value || ['boolean'].includes(typeOf(value)),
     },
+    qrcode: {
+      validator: value => ['', 'auto'].includes(value) || ['boolean'].includes(typeOf(value)),
+    },
+    qrcodeProps: Object
   },
   watch: {
-    value: {
-      immediate: true,
-      handler (newVal, oldVal) {
-        if (newVal) {
-          if (newVal instanceof Array) {
-            this.files = this.objectKey ?
-              Array.from(newVal, v => v[this.objectKey]).filter(v => v) :
-              newVal.filter(v => v)
+    Value: {
+      immediate: true, // todo: 触发两次
+      async handler (n, o) {
+        if (n) {
+          if (n instanceof Array) {
+            const files = []
+            for (let v of this.ObjectKey ? Array.from(n, v => v[this.ObjectKey]) : n) {
+              if (v) {
+                if (typeof v === 'string') {
+                  let a = await this.getImgSrc(v)
+                  files.push(a)
+                } else if (!this.ObjectKey && isPlainObject(v)) {
+                  console.error(prefix + 'value 含对象类型元素，但未指定 objectKey')
+                } else {
+                  console.error(prefix + 'objectKey 的值仅能是 string 类型')
+                }
+              }
+            }
+            this.files = files
+            /*this.files = this.objectKey ?
+              Array.from(n, v => v[this.objectKey]).filter(this.getImgSrc) :
+              n.filter(this.getImgSrc)*/
           } else {
-            this.files = [newVal]
+            this.files = [await this.getImgSrc(n)]
           }
           if (this.files.length) {
             this.$nextTick(() => {
@@ -69,14 +94,58 @@ export default {
       viewer: null
     }
   },
+  computed: {
+    Value () {
+      return getFinalProp(this.value, globalProps.value)
+    },
+    Waterfall () {
+      return getFinalProp(this.waterfall, globalProps.waterfall, true)
+    },
+    ObjectKey () {
+      return getFinalProp(this.objectKey, globalProps.objectKey)
+    },
+    Qrcode () {
+      return getFinalProp(this.qrcode, globalProps.qrcode, false)
+    },
+    QrcodeProps () {
+      return getFinalProp(this.qrcodeProps, globalProps.qrcodeProps, {
+        margin: 0,
+        scale: 400,
+        errorCorrectionLevel: 'L',
+        width: 148,
+        height: 148,
+      })
+    }
+  },
   methods: {
+    async getImgSrc (str) {
+      if (this.Qrcode === 'auto') {
+        // 字符串
+        if (url(str) && base64(str, {
+          mediaType: 'image/',
+          scheme: true
+        })) {
+          const [res, err] = await awaitFor(QRCode.toDataURL(str, this.QrcodeProps))
+          return res
+        }
+        // base64或url
+        else {
+          return str
+        }
+      } else if (this.Qrcode) {
+        const [res, err] = await awaitFor(QRCode.toDataURL(str, this.QrcodeProps))
+        return res
+      } else {
+        return str
+      }
+    },
     preview (i = 0) {
       if (this.viewer) {
-        if (this.value) {
-          if (this.value instanceof Array) {
-            if (this.value.length === 0) {
+        if (this.Value) {
+          if (this.Value instanceof Array) {
+            if (this.Value.length === 0) {
               console.error(prefix + 'value为空')
-            } else if (i < 0 || i > this.value.length - 1) {
+            } else if (i < 0 || i > this.Value.length - 1) {
               console.error(prefix + 'preview参数越界')
             } else {
               this.viewer.view(i)
@@ -86,7 +155,7 @@ export default {
           }
         }
       }
-    }
+    },
   }
 }
 </script>
@@ -198,10 +267,10 @@ export default {
   }
 
   & > ul.waterfall {
-    padding: 15px;
     position: relative;
-    column-width: 200px;
+    column-width: 148px;
     column-gap: 1rem;
+    width: 100%; // 图片大小完全一致时显示异常
 
     & > li {
       width: 100%;
