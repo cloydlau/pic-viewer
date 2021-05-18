@@ -4,8 +4,19 @@
     <PicViewer :value="value[0]" qrcode="auto"/>
     <br/><br/>
 
+    <h2>多张（Swiper）</h2>
+    <PicViewer :value="value" qrcode="auto" pattern="swiper" :swiperProps="{
+      slidesPerView: 3,
+      spaceBetween: 15,
+    }"/>
+    <br/><br/>
+
+    <h2>多张（普通流）</h2>
+    <PicViewer :value="value" qrcode="auto"/>
+    <br/><br/>
+
     <h2>多张（瀑布流）</h2>
-    <PicViewer :value="value" :qrcode="false"/>
+    <PicViewer :value="value" qrcode="auto" pattern="waterfall"/>
     <br/><br/>
 
     <h2>表格内</h2>
@@ -22,7 +33,7 @@
       <el-table-column label="数量" prop="name"/>
       <el-table-column label="图片">
         <template slot-scope="{row}">
-          <PicViewer :waterfall="false" :value="row.img"/>
+          <PicViewer :value="row.img"/>
         </template>
       </el-table-column>
     </el-table>

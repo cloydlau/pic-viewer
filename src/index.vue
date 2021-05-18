@@ -1,14 +1,21 @@
 <template>
-  <div class="pic-viewer" v-if="files.length">
+  <div
+    :class="{
+      'pic-viewer': true,
+      'swiper-container': Pattern==='swiper'
+    }"
+    v-if="files.length"
+    ref="picViewer"
+  >
     <ul
       ref="viewer"
-      :class="{
-        'single': files.length === 1,
-        'normal-flow': !Waterfall,
-        'waterfall': files.length>1 && Waterfall
-      }"
+      :class="(Pattern==='swiper'?'swiper-wrapper':Pattern)||'normal-flow'"
     >
-      <li v-for="(v,i) of files" :key="i" class="item">
+      <li
+        v-for="(v,i) of files"
+        :key="i"
+        :class="Pattern==='swiper'&&'swiper-slide'"
+      >
         <div :class="v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover'">
           <img :src="v" alt="" referrerpolicy="no-referrer">
         </div>
@@ -27,6 +34,8 @@ const { base64, url } = validator
 import { getFinalProp } from './utils'
 import globalProps from './config'
 import { isPlainObject } from 'lodash-es'
+import 'swiper/swiper-bundle.min.css'
+import Swiper from 'swiper/swiper-bundle.min.js'
 
 const prefix = `[${name}] `
 
@@ -37,13 +46,12 @@ export default {
       validator: value => ['string', 'array', 'null'].includes(typeOf(value)),
     },
     objectKey: String,
-    waterfall: {
-      validator: value => '' === value || ['boolean'].includes(typeOf(value)),
-    },
     qrcode: {
       validator: value => ['', 'auto'].includes(value) || ['boolean'].includes(typeOf(value)),
     },
-    qrcodeProps: Object
+    pattern: String,
+    qrcodeProps: Object,
+    swiperProps: Object,
   },
   watch: {
     Value: {
@@ -71,35 +79,52 @@ export default {
           } else {
             this.files = [await this.getImgSrc(n)]
           }
-          if (this.files.length) {
-            this.$nextTick(() => {
-              if (this.viewer) {
-                this.viewer.update()
-              } else {
-                this.viewer = new Viewer(this.$refs.viewer, {
-                  zIndex: 5000
-                })
-              }
-            })
-          }
         } else {
           this.files = []
         }
+      }
+    },
+    files (n) {
+      if (n.length) {
+        this.$nextTick(() => {
+          if (this.Pattern === 'swiper') {
+            this.swiper = new Swiper(this.$refs.picViewer, this.SwiperProps)
+          }
+
+          if (this.viewer) {
+            this.viewer.update()
+          } else {
+            this.viewer = new Viewer(this.$refs.viewer, {
+              zIndex: 5000
+            })
+          }
+        })
       }
     }
   },
   data () {
     return {
       files: [],
-      viewer: null
+      viewer: null,
+      swiper: null,
     }
   },
   computed: {
+    SwiperProps () {
+      return getFinalProp(this.swiperProps, globalProps.swiperProps, {
+        //wrapperClass: 'swiper',
+        //slideClass: 'item',
+      })
+    },
+    Pattern () {
+      return getFinalProp(
+        this.pattern,
+        globalProps.pattern,
+        (this.$parent || this.$root)?.$el?.className === 'el-table__body' ? 'table-cell' : undefined
+      )
+    },
     Value () {
       return getFinalProp(this.value, globalProps.value)
-    },
-    Waterfall () {
-      return getFinalProp(this.waterfall, globalProps.waterfall, true)
     },
     ObjectKey () {
       return getFinalProp(this.objectKey, globalProps.objectKey)
@@ -115,7 +140,7 @@ export default {
         width: 148,
         height: 148,
       })
-    }
+    },
   },
   methods: {
     async getImgSrc (str) {
@@ -207,13 +232,6 @@ export default {
   }
 }
 
-.normal-flow .curl-on-hover {
-  &:hover:before, &:focus:before, &:active:before {
-    width: 10px;
-    height: 10px;
-  }
-}
-
 .reveal-on-hover {
   display: inline-block;
   vertical-align: middle;
@@ -246,27 +264,32 @@ export default {
 
 .pic-viewer {
   img {
-    vertical-align: middle; //fix: 图片下方空隙
-    object-fit: cover; //保持图片比例
+    vertical-align: middle; // fix: 图片下方空隙
+    object-fit: cover; // 保持图片比例
     max-width: 100%;
+    max-height: 100%;
     cursor: pointer;
-  }
-
-  .single img {
-    height: 148px;
   }
 
   & > ul {
     padding: 0;
     margin: 0 auto;
-    display: inline-block;
 
     & > li {
       list-style: none;
     }
   }
 
+  & > ul.swiper-wrapper {
+    & > .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   & > ul.waterfall {
+    display: inline-block;
     position: relative;
     column-width: 148px;
     column-gap: 1rem;
@@ -300,9 +323,33 @@ export default {
   }
 
   & > ul.normal-flow {
-    padding: 0;
+    display: inline-block;
+    margin: 0;
+
+    & > li {
+      list-style: none;
+      display: inline-block;
+      margin: 0 15px 15px 0;
+
+      & > div > img {
+        height: 148px; // 与 el-upload 组件保持一致
+        vertical-align: middle;
+        //border-radius: 5px;
+      }
+    }
+  }
+
+  & > ul.table-cell {
+    display: inline-block;
     height: 50px;
     margin: 0;
+
+    .curl-on-hover {
+      &:hover:before, &:focus:before, &:active:before {
+        width: 10px;
+        height: 10px;
+      }
+    }
 
     & > li {
       list-style: none;
@@ -311,7 +358,7 @@ export default {
 
       & > div > img {
         height: 50px;
-        vertical-align: middle;
+        vertical-align: bottom; // 换行时被遮挡
         //border-radius: 5px;
       }
     }
