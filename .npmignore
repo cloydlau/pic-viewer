@@ -36,3 +36,4 @@ tests/
 vite.config.ts
 windi.config.ts
 /dist/*.html
+/*.html
