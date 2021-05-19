@@ -33,13 +33,17 @@
       <el-table-column label="数量" prop="name"/>
       <el-table-column label="图片">
         <template slot-scope="{row}">
-          <PicViewer :value="row.img"/>
+          <PicViewer :value="row.img" qrcode="auto"/>
         </template>
       </el-table-column>
     </el-table>
 
     <PicViewer :value="value" v-show="false" ref="PicViewer"/>
-    <el-button @click="()=>{$refs.PicViewer.preview(0)}">预览</el-button>
+
+    <el-button-group>
+      <el-button @click="()=>{value=['123']}">改变value</el-button>
+      <el-button @click="()=>{$refs.PicViewer.preview(0)}">预览</el-button>
+    </el-button-group>
   </el-dialog>
 </template>
 

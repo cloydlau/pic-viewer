@@ -87,7 +87,7 @@ export default {
     files (n) {
       if (n.length) {
         this.$nextTick(() => {
-          if (this.Pattern === 'swiper') {
+          if (this.Pattern === 'swiper' && !this.swiper) {
             this.swiper = new Swiper(this.$refs.picViewer, this.SwiperProps)
           }
 
@@ -114,6 +114,7 @@ export default {
       return getFinalProp(this.swiperProps, globalProps.swiperProps, {
         //wrapperClass: 'swiper',
         //slideClass: 'item',
+        observer: true,
       })
     },
     Pattern () {

@@ -2,73 +2,120 @@
 
 ![before preview](./outside.png)
 
-<br/>
+<br>
 
 ![previewing](./previewing.png)
 
-### Features
+## Features
 
-- √ viewerjs的vue版本 增加了预览前的外部展示 使其开箱即用
-- √ 支持自适应瀑布流展示、嵌套在表格内展示
-- √ 灵活的数据类型：支持字符串/字符串数组/对象数组
-- √ 友好的hover交互
-- √ 全局安装/单独引入 通用参数支持全局配置
+- √ `viewerjs` 的 vue 版本 增加了预览前的外部展示 使其开箱即用
+- √ 灵活的展示形式：支持文档流、轮播图、自适应瀑布流、嵌套在表格内
+- √ 灵活的数据类型：支持字符串、字符串数组、对象数组
+- √ 支持二维码
+- √ 全局或局部引入 参数支持全局或局部配置
 
-### Installation
+<br>
+
+## Installation
+
 ![NPM](https://nodei.co/npm/pic-viewer.png)
-``` bash
-$ yarn add pic-viewer
-```
 
 Dependencies：vue
 
-```js
+```ts
+// 全局引入
+
+import 'pic-viewer/dist/style.css'
 import PicViewer from 'pic-viewer'
 
-// 局部引入
-components: { PicViewer }
-
-// 全局引入
-Vue.use(PicViewer)
+Vue.use(PicViewer, {
+  // 全局配置
+})
 ```
 
-### Quick Start
+```vue
+<!-- 局部引入 -->
 
-**Waterfall Layout:**
-```html
-<PicViewer :value=""/>
+<template>
+  <PicViewer v-bind="config"/>
+</template>
+
+<script>
+import 'pic-viewer/dist/style.css'
+import PicViewer from 'pic-viewer'
+
+export default {
+  components: { PicViewer },
+  data () {
+    return {
+      config: {
+        // 局部配置
+      }
+    }
+  }
+}
+</script>
 ```
 
-**Normal Flow Layout:**
+<br>
 
-> Typically used in tables
-
-Here's an example for element-ui:
-
-```html
-<el-table>
-  <el-table-column>
-    <template slot-scope="{ row }">
-      <PicViewer :waterfall="false" :value="row.img"/>
-    </template>
-  </el-table-column>
-</el-table>
-```
-
-**Preview manually, no external display:**
-```html
-<PicViewer :value="" v-show="false" ref="PicViewer"/>
-<button @click="() => { $refs.PicViewer.preview(6) }">preview</button>
-```
+## Props
 
 | Attribute | Description | Type | Options | Default |
 | --- | --- | --- | --- | --- |
-| value | img link[s] | string / array[string] / array[object] | | |
+| value | img link(s) | string / array[string] / array[object] | | |
+| pattern |  display pattern | string | 'waterfall', 'swiper', 'table-cell' | undefined, means **normal flow** |
 | objectKey | if type of value is array[object], you need to specify the img key of object | string | | |
-| waterfall | whether using waterfall layout | boolean | | true |
+| swiperProps* |  props of [swiper](https://swiperjs.com/swiper-api) | object | | |
+| qrcode* | turning value into qrcode | boolean, string | true, false, 'auto' | false |
+| qrcodeProps* | props of [qrcode](https://github.com/soldair/node-qrcode) dependency | object | | |
 
-<br/>
+### qrcode
+
+::: tip  
+如果将 qrcode 设为 'auto'，pic-viewer 会自动判断是否需要转换（value 为 base64 或 url 时不会转换）
+:::
+
+### qrcodeProps
+
+```
+// 默认值
+
+{
+  margin: 0,
+  scale: 400,
+  errorCorrectionLevel: 'L',
+  width: 148,
+  height: 148,
+}
+```
+
+### swiperProps
+
+```
+// 默认值
+
+{
+  observer: true,
+}
+```
+
+<br>
+
+## Methods
 
 | Method | Description | Parameters |
 | --- | --- | --- |
 | preview | preview manually | index of value array (default: 0) |
+
+<br>
+
+## Use Cases
+
+### Preview manually, no external display
+
+```html
+
+<PicViewer :value="" v-show="false" ref="PicViewer"/>
+<button @click="()=>{$refs.PicViewer.preview(6)}">preview</button>
+```
