@@ -114,6 +114,17 @@ export default {
 
 <br>
 
+## Config rules
+
+- 所有参数均支持全局或局部配置
+
+权重：
+
+- 局部配置高于全局配置
+- 对于对象类型的参数 局部配置会与全局配置进行合并 同名属性会被局部配置覆盖
+
+<br>
+
 ## Events
 
 | name | description | callback's arguments |
