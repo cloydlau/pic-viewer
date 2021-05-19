@@ -12,7 +12,7 @@
     <br/><br/>
 
     <h2>多张（普通流）</h2>
-    <PicViewer :value="value" qrcode="auto"/>
+    <PicViewer :value="JSON.stringify(value)" qrcode="auto"/>
     <br/><br/>
 
     <h2>多张（瀑布流）</h2>
@@ -39,6 +39,7 @@
     </el-table>
 
     <PicViewer :value="value" v-show="false" ref="PicViewer"/>
+    <PicViewer :value="value[0]" ref="picViewer" @click="onClick" :viewerjs="false"/>
 
     <el-button-group>
       <el-button @click="()=>{value=['123']}">改变value</el-button>
@@ -73,6 +74,12 @@ export default {
       ],
     }
   },
+  methods: {
+    onClick ({ index, item }) {
+      console.log('onClick', index, item)
+      this.$refs.picViewer.preview(index)
+    }
+  }
 }
 </script>
 

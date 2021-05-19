@@ -9,8 +9,8 @@
 ## Features
 
 - √ `viewerjs` 的 vue 版本 增加了预览前的外部展示 使其开箱即用
-- √ 灵活的展示形式：支持文档流、轮播图、自适应瀑布流、嵌套在表格内
-- √ 灵活的数据类型：支持字符串、字符串数组、对象数组
+- √ 多样的展示形式：支持文档流、轮播图、自适应瀑布流、嵌套在表格内
+- √ 灵活的数据类型：支持字符串、字符串数组、JSON字符串、对象数组
 - √ 支持二维码
 - √ 全局或局部引入 参数支持全局或局部配置
 
@@ -65,6 +65,8 @@ export default {
 | --- | --- | --- | --- | --- |
 | value | img link(s) | string / array[string] / array[object] | | |
 | pattern |  display pattern | string | 'waterfall', 'swiper', 'table-cell' | undefined, means **normal flow** |
+| viewerjs | indicate if enable viewerjs or not | boolean | | true |
+| viewerjsProps* |  props of [viewerjs](https://github.com/fengyuanchen/viewerjs) | object | | |
 | objectKey | if type of value is array[object], you need to specify the img key of object | string | | |
 | swiperProps* |  props of [swiper](https://swiperjs.com/swiper-api) | object | | |
 | qrcode* | turning value into qrcode | boolean, string | true, false, 'auto' | false |
@@ -75,6 +77,16 @@ export default {
 ::: tip  
 如果将 qrcode 设为 'auto'，pic-viewer 会自动判断是否需要转换（value 为 base64 或 url 时不会转换）
 :::
+
+### viewerjsProps
+
+```
+// 默认值
+
+{
+  zIndex: 5000,
+}
+```
 
 ### qrcodeProps
 
@@ -99,6 +111,14 @@ export default {
   observer: true,
 }
 ```
+
+<br>
+
+## Events
+
+| name | description | callback's arguments |
+| --- | --- | --- |
+| click | 点击图片后触发 | { index, item } |
 
 <br>
 
@@ -131,4 +151,34 @@ Preview manually, no external display
 <PicViewer :qrcodeProps="{
   scale: 900,
 }"/>
+```
+
+<br>
+
+## 获取 swiper 实例
+
+```vue
+
+<template>
+  <PicViewer pattern="swiper" ref="picViewer"/>
+</template>
+
+<script>
+import 'pic-viewer/dist/style.css'
+import PicViewer from 'pic-viewer'
+
+export default {
+  components: { PicViewer },
+  mounted () {
+    this.$watch('$refs.picViewer.swiper', n => {
+      this.swiper = n
+    })
+  },
+  data () {
+    return {
+      swiper: null
+    }
+  },
+}
+</script>
 ```

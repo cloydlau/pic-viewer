@@ -16,8 +16,12 @@
         :key="i"
         :class="Pattern==='swiper'&&'swiper-slide'"
       >
-        <div :class="v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover'">
-          <img :src="v" alt="" referrerpolicy="no-referrer">
+        <div :class="Viewerjs&&(v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover')">
+          <img
+            :src="v"
+            alt=""
+            referrerpolicy="no-referrer"
+            @click="()=>{$emit('click',{index:i,item:v})}">
         </div>
       </li>
     </ul>
@@ -52,12 +56,24 @@ export default {
     pattern: String,
     qrcodeProps: Object,
     swiperProps: Object,
+    viewerjs: {
+      validator: value => '' === value || ['boolean'].includes(typeOf(value)),
+    },
+    viewerjsProps: Object,
   },
   watch: {
     Value: {
-      immediate: true, // todo: 触发两次
+      immediate: true,
       async handler (n, o) {
         if (n) {
+          // 支持 json-string
+          if (typeof n === 'string' && n.startsWith('[') && n.endsWith(']')) {
+            try {
+              n = JSON.parse(n)
+            } catch (e) {
+              console.error(e)
+            }
+          }
           if (n instanceof Array) {
             const files = []
             for (let v of this.ObjectKey ? Array.from(n, v => v[this.ObjectKey]) : n) {
@@ -91,12 +107,12 @@ export default {
             this.swiper = new Swiper(this.$refs.picViewer, this.SwiperProps)
           }
 
-          if (this.viewer) {
-            this.viewer.update()
-          } else {
-            this.viewer = new Viewer(this.$refs.viewer, {
-              zIndex: 5000
-            })
+          if (this.Viewerjs) {
+            if (this.viewer) {
+              this.viewer.update()
+            } else {
+              this.viewer = new Viewer(this.$refs.viewer, this.ViewerjsProps)
+            }
           }
         })
       }
@@ -110,6 +126,14 @@ export default {
     }
   },
   computed: {
+    Viewerjs () {
+      return getFinalProp(this.viewerjs, globalProps.viewerjs, true)
+    },
+    ViewerjsProps () {
+      return getFinalProp(this.viewerjsProps, globalProps.viewerjsProps, {
+        zIndex: 5000,
+      })
+    },
     SwiperProps () {
       return getFinalProp(this.swiperProps, globalProps.swiperProps, {
         //wrapperClass: 'swiper',
@@ -170,9 +194,9 @@ export default {
         if (this.Value) {
           if (this.Value instanceof Array) {
             if (this.Value.length === 0) {
-              console.error(prefix + 'value为空')
+              console.error(prefix + 'value 为空')
             } else if (i < 0 || i > this.Value.length - 1) {
-              console.error(prefix + 'preview参数越界')
+              console.error(prefix + 'preview 参数越界')
             } else {
               this.viewer.view(i)
             }
@@ -180,6 +204,8 @@ export default {
             this.viewer.show()
           }
         }
+      } else {
+        console.error(prefix + 'viewerjs 已被禁用')
       }
     },
   }
@@ -210,6 +236,7 @@ export default {
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: '';
@@ -240,6 +267,7 @@ export default {
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 
   &:before {
     content: "";
@@ -269,7 +297,6 @@ export default {
     object-fit: cover; // 保持图片比例
     max-width: 100%;
     max-height: 100%;
-    cursor: pointer;
   }
 
   & > ul {
