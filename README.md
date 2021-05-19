@@ -110,12 +110,25 @@ export default {
 
 <br>
 
-## Use Cases
+## 编程式调用预览
 
-### Preview manually, no external display
+Preview manually, no external display
 
 ```html
 
 <PicViewer :value="" v-show="false" ref="PicViewer"/>
 <button @click="()=>{$refs.PicViewer.preview(6)}">preview</button>
+```
+
+<br>
+
+## 二维码清晰度
+
+```html
+<!-- 如果 value 的值比较小 而 size 的值比较大 会导致图片模糊 此时可以增大 scale 来解决 -->
+<!-- scale 指二维码每个黑点占用的 px 数量 可选值为整数的二次方 如25 36 49 64 81 -->
+
+<PicViewer :qrcodeProps="{
+  scale: 900,
+}"/>
 ```
