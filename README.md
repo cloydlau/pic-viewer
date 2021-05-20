@@ -127,11 +127,30 @@ export default {
 
 ## Events
 
-| name | description | callback's arguments |
+| Name | Description | Callback's arguments |
 | --- | --- | --- |
-| click | 点击图片后触发 | { index, item } |
+| click | 点击图片后触发 | { src, index } |
 
 <br>
+
+## Slots
+
+| Name | Description |
+| --- | --- |
+| 默认插槽 | 自定义img标签 |
+
+```html
+<!-- 示例 -->
+
+<PicViewer>
+  <template v-slot="{ src, index }">
+    <img :src="src" alt="">
+    <div>第{{ index + 1 }}张</div>
+  </template>
+</PicViewer>
+```
+
+<br/>
 
 ## Methods
 

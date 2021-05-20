@@ -8,7 +8,12 @@
     <PicViewer :value="value" qrcode="auto" pattern="swiper" :swiperProps="{
       slidesPerView: 3,
       spaceBetween: 15,
-    }"/>
+    }">
+      <template v-slot="{ src, index }">
+        <img :src="src" alt="">
+        <div>第{{ index + 1 }}张</div>
+      </template>
+    </PicViewer>
     <br/><br/>
 
     <h2>多张（普通流）</h2>
@@ -75,8 +80,8 @@ export default {
     }
   },
   methods: {
-    onClick ({ index, item }) {
-      console.log('onClick', index, item)
+    onClick ({ index, src }) {
+      console.log('onClick', index, src)
       this.$refs.picViewer.preview(index)
     }
   }

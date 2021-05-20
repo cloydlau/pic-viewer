@@ -1,6 +1,6 @@
 {
   "name": "pic-viewer",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "cloydlau",
   "license": "MIT",
   "description": "开箱即用、支持表格嵌套的图片预览器",
@@ -37,7 +37,7 @@
     "kayran": "^0.1.1",
     "lodash-es": "^4.17.21",
     "qrcode": "^1.4.4",
-    "swiper": "^6.6.1",
+    "swiper": "^6.6.2",
     "viewerjs": "^1.9.0"
   },
   "peerDependencies": {

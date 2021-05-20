@@ -16,12 +16,17 @@
         :key="i"
         :class="Pattern==='swiper'&&'swiper-slide'"
       >
-        <div :class="Viewerjs&&(v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover')">
-          <img
-            :src="v"
-            alt=""
-            referrerpolicy="no-referrer"
-            @click="()=>{$emit('click',{index:i,item:v})}">
+        <div
+          :class="Viewerjs&&(v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover')"
+          @click="()=>{$emit('click',{index:i,src:v})}"
+        >
+          <slot :index="i" :src="v">
+            <img
+              :src="v"
+              alt=""
+              referrerpolicy="no-referrer"
+            >
+          </slot>
         </div>
       </li>
     </ul>
