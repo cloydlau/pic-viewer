@@ -190,7 +190,11 @@ Preview manually, no external display
 ```vue
 
 <template>
-  <PicViewer pattern="swiper" ref="picViewer"/>
+  <PicViewer pattern="swiper" ref="picViewer" :swiperProps="{
+    on: {
+      init: onSwiperInit,
+    },
+  }"/>
 </template>
 
 <script>
@@ -199,16 +203,18 @@ import PicViewer from 'pic-viewer'
 
 export default {
   components: { PicViewer },
-  mounted () {
-    this.$watch('$refs.picViewer.swiper', n => {
-      this.swiper = n
-    })
-  },
   data () {
     return {
       swiper: null
     }
   },
+  methods: {
+    onSwiperInit () {
+      this.$nextTick(() => {
+        this.swiper = this.$refs.picViewer.swiper
+      })
+    }
+  }
 }
 </script>
 ```
