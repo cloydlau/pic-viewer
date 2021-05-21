@@ -1,4 +1,4 @@
-# pic-viewer / 图片预览
+# pic-viewer / 图片画廊
 
 ![before preview](./outside.png)
 
