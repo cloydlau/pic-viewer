@@ -8,10 +8,13 @@
     "图片预览",
     "图片画廊",
     "image viewer",
+    "image gallery",
+    "image previewer",
+    "picture viewer",
+    "picture gallery",
     "picture previewer",
     "viewerjs",
-    "vue-viewerjs",
-    "自适应瀑布流"
+    "vue-viewerjs"
   ],
   "private": false,
   "repository": {
