@@ -14,7 +14,10 @@
     "picture gallery",
     "picture previewer",
     "viewerjs",
-    "vue-viewerjs"
+    "vue-viewerjs",
+    "qrcode",
+    "swiper",
+    "carousel"
   ],
   "private": false,
   "repository": {
