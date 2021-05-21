@@ -236,63 +236,65 @@ export default {
   }
 }*/
 
-.curl-on-hover {
-  vertical-align: middle;
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  cursor: pointer;
+@media (any-hover: hover) {
+  .curl-on-hover {
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    cursor: pointer;
 
-  &:before {
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    height: 0;
-    width: 0;
-    bottom: 0;
-    right: 0;
-    background: white;
-    //IE9
-    background: linear-gradient(315deg, white 45%, #aaa 50%, #ccc 56%, white 80%);
-    box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
-    transition-duration: 0.3s;
-    transition-property: width, height;
+    &:before {
+      content: '';
+      pointer-events: none;
+      position: absolute;
+      height: 0;
+      width: 0;
+      bottom: 0;
+      right: 0;
+      background: white;
+      //IE9
+      background: linear-gradient(315deg, white 45%, #aaa 50%, #ccc 56%, white 80%);
+      box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
+      transition-duration: 0.3s;
+      transition-property: width, height;
+    }
+
+    &:hover:before, &:focus:before, &:active:before {
+      width: 25px;
+      height: 25px;
+    }
   }
 
-  &:hover:before, &:focus:before, &:active:before {
-    width: 25px;
-    height: 25px;
-  }
-}
+  .reveal-on-hover {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 
-.reveal-on-hover {
-  display: inline-block;
-  vertical-align: middle;
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
+    &:before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-color: rgba(32, 152, 209, .1);
+      border-style: solid;
+      border-width: 0;
+      transition-property: border-width;
+      transition-duration: 0.1s;
+      transition-timing-function: ease-out;
+    }
 
-  &:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-color: rgba(32, 152, 209, .1);
-    border-style: solid;
-    border-width: 0;
-    transition-property: border-width;
-    transition-duration: 0.1s;
-    transition-timing-function: ease-out;
-  }
-
-  &:hover:before, &:focus:before, &:active:before {
-    transform: translateY(0);
-    border-width: 4px;
+    &:hover:before, &:focus:before, &:active:before {
+      transform: translateY(0);
+      border-width: 4px;
+    }
   }
 }
 
@@ -377,10 +379,12 @@ export default {
     height: 50px;
     margin: 0;
 
-    .curl-on-hover {
-      &:hover:before, &:focus:before, &:active:before {
-        width: 10px;
-        height: 10px;
+    @media (any-hover: hover) {
+      .curl-on-hover {
+        &:hover:before, &:focus:before, &:active:before {
+          width: 10px;
+          height: 10px;
+        }
       }
     }
 
