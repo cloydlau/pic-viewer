@@ -97,8 +97,6 @@ export default {
   margin: 0,
   scale: 400,
   errorCorrectionLevel: 'L',
-  width: 148,
-  height: 148,
 }
 ```
 
