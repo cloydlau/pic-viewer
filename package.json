@@ -1,6 +1,6 @@
 {
   "name": "pic-viewer",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "author": "cloydlau",
   "license": "MIT",
   "description": "开箱即用，支持二维码、轮播图、瀑布流、表格嵌套的图片画廊",
@@ -44,7 +44,7 @@
     "ri": "npm run clean && pnpm i"
   },
   "dependencies": {
-    "kayran": "^0.1.1",
+    "kayran": "^0.2.1",
     "lodash-es": "^4.17.21",
     "qrcode": "^1.4.4",
     "swiper": "^6.6.2",

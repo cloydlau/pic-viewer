@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   element-ui: ^2.15.1
-  kayran: ^0.1.1
+  kayran: ^0.2.1
   lodash-es: ^4.17.21
   qrcode: ^1.4.4
   sass: ^1.34.0
@@ -15,7 +15,7 @@ specifiers:
   vue: ^2.6.12
 
 dependencies:
-  kayran: 0.1.1
+  kayran: 0.2.1
   lodash-es: 4.17.21
   qrcode: 1.4.4
   swiper: 6.6.2
@@ -1443,8 +1443,8 @@ packages:
       graceful-fs: 4.2.6
     dev: true
 
-  /kayran/0.1.1:
-    resolution: {integrity: sha512-qHbORwAxkkqdLL5UzyLiyaSfRM185ppX5coJw+wjqg3t6dQWsfkeKkMbygD0Cw+HqkaBRQ/u19FjGlQEmHV3Ag==}
+  /kayran/0.2.1:
+    resolution: {integrity: sha512-kUawepvc1+1+sAsG2Jhodu71PXbqkPrEI196fh9bngnclqO1VJwp1CvMJSwNronzQMFe4UkUk0Q5uYlYTgqyRQ==}
     dependencies:
       lodash-es: 4.17.21
       qs: 6.10.1

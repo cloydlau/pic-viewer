@@ -12,7 +12,7 @@
       :class="(Pattern==='swiper'?'swiper-wrapper':Pattern)||'normal-flow'"
     >
       <li
-        v-for="({type,src},i) of files"
+        v-for="({type,src,width,height},i) of files"
         :key="i"
         :class="Pattern==='swiper'&&'swiper-slide'"
       >
@@ -25,8 +25,8 @@
               :src="src"
               alt=""
               referrerpolicy="no-referrer"
-              :width="type==='qrcode'&&QrcodeProps.width"
-              :height="type==='qrcode'?QrcodeProps.height:'148'"
+              :width="width"
+              :height="height"
             >
           </slot>
         </div>
@@ -40,7 +40,7 @@ import 'viewerjs/dist/viewer.css'
 import Viewer from 'viewerjs'
 import { name } from '../package.json'
 import QRCode from 'qrcode'
-import { validator, typeOf, awaitFor } from 'kayran'
+import { validator, typeOf, waitFor, loadStyle } from 'kayran'
 const { base64, url } = validator
 import { getFinalProp } from './utils'
 import globalProps from './config'
@@ -183,33 +183,31 @@ export default {
         type = 'base64'
       }
 
+      let src = ''
+
       if (this.Qrcode === 'auto') {
         // 字符串
         if (type === 'qrcode') {
-          const [res, err] = await awaitFor(QRCode.toDataURL(str, this.QrcodeProps))
-          return {
-            type,
-            src: res
-          }
+          const [res, err] = await waitFor(QRCode.toDataURL(str, this.QrcodeProps))
+          src = res
         }
         // base64或url
         else {
-          return {
-            type,
-            src: str
-          }
+          src = str
         }
       } else if (this.Qrcode) {
-        const [res, err] = await awaitFor(QRCode.toDataURL(str, this.QrcodeProps))
-        return {
-          type,
-          src: res
-        }
+        const [res, err] = await waitFor(QRCode.toDataURL(str, this.QrcodeProps))
+        type = 'qrcode'
+        src = res
       } else {
-        return {
-          type,
-          src: str
-        }
+        src = str
+      }
+
+      return {
+        src,
+        type,
+        width: type === 'qrcode' ? this.QrcodeProps.width : '',
+        height: type === 'qrcode' ? this.QrcodeProps.height : '148'
       }
     },
     preview (i = 0) {
