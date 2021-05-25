@@ -17,7 +17,10 @@
     <br/><br/>
 
     <h2>多张（普通流）</h2>
-    <PicViewer :value="JSON.stringify(value)" qrcode="auto"/>
+    <PicViewer :value="JSON.stringify(value)" qrcode="auto" :qrcodeProps="{
+      width: 48,
+      height: 48,
+    }"/>
     <br/><br/>
 
     <h2>多张（瀑布流）</h2>

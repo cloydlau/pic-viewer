@@ -12,19 +12,21 @@
       :class="(Pattern==='swiper'?'swiper-wrapper':Pattern)||'normal-flow'"
     >
       <li
-        v-for="(v,i) of files"
+        v-for="({type,src},i) of files"
         :key="i"
         :class="Pattern==='swiper'&&'swiper-slide'"
       >
         <div
-          :class="Viewerjs&&(v.endsWith('.png')?'reveal-on-hover': 'curl-on-hover')"
-          @click="()=>{$emit('click',{index:i,src:v})}"
+          :class="Viewerjs&&(src&&src.endsWith('.png')?'reveal-on-hover': 'curl-on-hover')"
+          @click="()=>{$emit('click',{index:i,src})}"
         >
-          <slot :index="i" :src="v">
+          <slot :index="i" :src="src">
             <img
-              :src="v"
+              :src="src"
               alt=""
               referrerpolicy="no-referrer"
+              :width="type==='qrcode'&&QrcodeProps.width"
+              :height="type==='qrcode'?QrcodeProps.height:'148'"
             >
           </slot>
         </div>
@@ -84,8 +86,7 @@ export default {
             for (let v of this.ObjectKey ? Array.from(n, v => v[this.ObjectKey]) : n) {
               if (v) {
                 if (typeof v === 'string') {
-                  let a = await this.getImgSrc(v)
-                  files.push(a)
+                  files.push(await this.getImgSrc(v))
                 } else if (!this.ObjectKey && isPlainObject(v)) {
                   console.error(prefix + 'value 含对象类型元素，但未指定 objectKey')
                 } else {
@@ -167,31 +168,48 @@ export default {
         margin: 0,
         scale: 400,
         errorCorrectionLevel: 'L',
-        width: 148,
-        height: 148,
       })
     },
   },
   methods: {
     async getImgSrc (str) {
+      let type = 'qrcode'
+      if (!url(str)) {
+        type = 'url'
+      } else if (!base64(str, {
+        mediaType: 'image/',
+        scheme: true
+      })) {
+        type = 'base64'
+      }
+
       if (this.Qrcode === 'auto') {
         // 字符串
-        if (url(str) && base64(str, {
-          mediaType: 'image/',
-          scheme: true
-        })) {
+        if (type === 'qrcode') {
           const [res, err] = await awaitFor(QRCode.toDataURL(str, this.QrcodeProps))
-          return res
+          return {
+            type,
+            src: res
+          }
         }
         // base64或url
         else {
-          return str
+          return {
+            type,
+            src: str
+          }
         }
       } else if (this.Qrcode) {
         const [res, err] = await awaitFor(QRCode.toDataURL(str, this.QrcodeProps))
-        return res
+        return {
+          type,
+          src: res
+        }
       } else {
-        return str
+        return {
+          type,
+          src: str
+        }
       }
     },
     preview (i = 0) {
@@ -367,7 +385,7 @@ export default {
       margin: 0 15px 15px 0;
 
       & > div > img {
-        height: 148px; // 与 el-upload 组件保持一致
+        //height: 148px; // 与 el-upload 组件保持一致
         vertical-align: middle;
         //border-radius: 5px;
       }
