@@ -12,7 +12,7 @@
       :class="(Pattern==='swiper'?'swiper-wrapper':Pattern)||'normal-flow'"
     >
       <li
-        v-for="({type,src,width,height},i) of files"
+        v-for="({src,width,height},i) of files"
         :key="i"
         :class="Pattern==='swiper'&&'swiper-slide'"
       >
