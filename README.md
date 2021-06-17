@@ -95,8 +95,9 @@ export default {
 
 {
   margin: 0,
-  scale: 400,
   errorCorrectionLevel: 'L',
+  width: 444,
+  height: 444,
 }
 ```
 
@@ -172,12 +173,13 @@ Preview manually, no external display
 
 ## 二维码清晰度
 
+默认图片的style高度为148px（与 `el-upload` 保持一致），而qrcode的分辨率为 `444×444`（三倍图），如果你修改了样式，增大了宽高，可能导致图片模糊
+
 ```html
-<!-- 如果 value 的值比较小 而 size 的值比较大 会导致图片模糊 此时可以增大 scale 来解决 -->
-<!-- scale 指二维码每个黑点占用的 px 数量 可选值为整数的二次方 如25 36 49 64 81 -->
 
 <PicViewer :qrcodeProps="{
-  scale: 900,
+  width: 1000,
+  height: 1000 
 }"/>
 ```
 

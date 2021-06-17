@@ -1,7 +1,7 @@
 <template>
   <el-dialog visible :close-on-click-modal="false" :show-close="false" title="pic-viewer">
     <h2>单张</h2>
-    <PicViewer :value="value[0]" qrcode="auto"/>
+    <PicViewer :value="value[0]" qrcode/>
     <br/><br/>
 
     <h2>多张（Swiper）</h2>
@@ -16,7 +16,7 @@
     </PicViewer>
     <br/><br/>
 
-    <h2>多张（普通流）</h2>
+    <h2>多张（文档流）</h2>
     <PicViewer :value="JSON.stringify(value)" qrcode="auto" :qrcodeProps="{
       width: 48,
       height: 48,

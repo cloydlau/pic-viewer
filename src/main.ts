@@ -1,3 +1,5 @@
+import 'virtual:windi.css'
+
 import PicViewer from './index.vue'
 
 const install = function (Vue) {

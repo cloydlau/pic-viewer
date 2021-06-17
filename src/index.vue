@@ -6,6 +6,7 @@
     }"
     v-if="files.length"
     ref="picViewer"
+    v-loading="loading"
   >
     <ul
       ref="viewer"
@@ -16,10 +17,7 @@
         :key="i"
         :class="Pattern==='swiper'&&'swiper-slide'"
       >
-        <div
-          :class="Viewerjs&&(src&&src.endsWith('.png')?'reveal-on-hover': 'curl-on-hover')"
-          @click="()=>{$emit('click',{index:i,src})}"
-        >
+        <div @click="()=>{$emit('click',{index:i,src})}">
           <slot :index="i" :src="src">
             <img
               :src="src"
@@ -27,6 +25,9 @@
               referrerpolicy="no-referrer"
               :width="width"
               :height="height"
+              :class="{
+                'cursor-pointer': Viewerjs,
+              }"
             >
           </slot>
         </div>
@@ -72,6 +73,7 @@ export default {
     Value: {
       immediate: true,
       async handler (n, o) {
+        this.loading = true
         if (n) {
           // 支持 json-string
           if (typeof n === 'string' && n.startsWith('[') && n.endsWith(']')) {
@@ -86,6 +88,10 @@ export default {
             for (let v of this.ObjectKey ? Array.from(n, v => v[this.ObjectKey]) : n) {
               if (v) {
                 if (typeof v === 'string') {
+                  /*this.getImgSrc(v).then(file => {
+                    files.push(file)
+                  })*/
+                  // 同步才能保证图片的顺序不变
                   files.push(await this.getImgSrc(v))
                 } else if (!this.ObjectKey && isPlainObject(v)) {
                   console.error(prefix + 'value 含对象类型元素，但未指定 objectKey')
@@ -104,6 +110,7 @@ export default {
         } else {
           this.files = []
         }
+        this.loading = false
       }
     },
     files (n) {
@@ -129,6 +136,7 @@ export default {
       files: [],
       viewer: null,
       swiper: null,
+      loading: true
     }
   },
   computed: {
@@ -166,8 +174,11 @@ export default {
     QrcodeProps () {
       return getFinalProp(this.qrcodeProps, globalProps.qrcodeProps, {
         margin: 0,
-        scale: 400,
+        //scale: 4, // 太大会导致卡顿
         errorCorrectionLevel: 'L',
+        // 默认使用三倍图 更加清晰
+        width: 444,
+        height: 444,
       })
     },
   },
@@ -183,32 +194,32 @@ export default {
         type = 'base64'
       }
 
-      let src = ''
+      let result = {
+        src: '',
+        type,
+        width: '',
+        height: '',
+      }
 
       if (this.Qrcode === 'auto') {
         // 字符串
         if (type === 'qrcode') {
           const [res, err] = await waitFor(QRCode.toDataURL(str, this.QrcodeProps))
-          src = res
+          result.src = res
         }
         // base64或url
         else {
-          src = str
+          result.src = str
         }
       } else if (this.Qrcode) {
+        result.type = 'qrcode'
         const [res, err] = await waitFor(QRCode.toDataURL(str, this.QrcodeProps))
-        type = 'qrcode'
-        src = res
+        result.src = res
       } else {
-        src = str
+        result.src = str
       }
 
-      return {
-        src,
-        type,
-        width: type === 'qrcode' ? this.QrcodeProps.width : '',
-        height: type === 'qrcode' ? this.QrcodeProps.height : '148'
-      }
+      return result
     },
     preview (i = 0) {
       if (this.viewer) {
@@ -258,7 +269,6 @@ export default {
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     position: relative;
-    cursor: pointer;
 
     &:before {
       content: '';
@@ -289,7 +299,6 @@ export default {
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
 
     &:before {
       content: "";
@@ -383,7 +392,7 @@ export default {
       margin: 0 15px 15px 0;
 
       & > div > img {
-        //height: 148px; // 与 el-upload 组件保持一致
+        height: 148px; // 与 el-upload 组件保持一致
         vertical-align: middle;
         //border-radius: 5px;
       }
