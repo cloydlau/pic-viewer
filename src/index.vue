@@ -6,7 +6,6 @@
     }"
     v-if="files.length"
     ref="picViewer"
-    v-loading="loading"
   >
     <ul
       ref="viewer"

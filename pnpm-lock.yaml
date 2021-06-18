@@ -7,7 +7,7 @@ specifiers:
   qrcode: ^1.4.4
   sass: 1.34.1
   swiper: ^6.7.0
-  typescript: ^4.3.3
+  typescript: ^4.3.4
   viewerjs: ^1.10.0
   vite: ^2.3.7
   vite-plugin-vue2: ^1.6.2
@@ -25,7 +25,7 @@ dependencies:
 devDependencies:
   element-ui: 2.15.2_vue@2.6.14
   sass: 1.34.1
-  typescript: 4.3.3
+  typescript: 4.3.4
   vite: 2.3.7
   vite-plugin-vue2: 1.6.2_vite@2.3.7
   vite-plugin-windicss: 1.0.3_vite@2.3.7
@@ -335,7 +335,7 @@ packages:
       fastq: 1.11.0
     dev: true
 
-  /@rollup/pluginutils/4.1.0_rollup@2.52.0:
+  /@rollup/pluginutils/4.1.0_rollup@2.52.1:
     resolution: {integrity: sha512-TrBhfJkFxA+ER+ew2U2/fHbebhLT/l/2pRk0hfj9KusXUuRXd2v0R58AfaZK9VXDQ4TogOSEmICVrQAA3zFnHQ==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
@@ -343,7 +343,7 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.0
-      rollup: 2.52.0
+      rollup: 2.52.1
     dev: true
 
   /@vue/babel-helper-vue-jsx-merge-props/1.2.1:
@@ -1594,8 +1594,8 @@ packages:
       supports-color: 6.1.0
     dev: true
 
-  /postcss/8.3.4:
-    resolution: {integrity: sha512-/tZY0PXExXXnNhKv3TOvZAOUYRyuqcCbBm2c17YMDK0PlVII3K7/LKdt3ScHL+hhouddjUWi+1sKDf9xXW+8YA==}
+  /postcss/8.3.5:
+    resolution: {integrity: sha512-NxTuJocUhYGsMiMFHDUkmjSKT3EdH4/WbGF6GCi1NDGk+vbcUTun4fpbOqaPtD8IIsztA2ilZm2DhYCuyN58gA==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       colorette: 1.2.2
@@ -1722,8 +1722,8 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: true
 
-  /rollup/2.52.0:
-    resolution: {integrity: sha512-lSkBDGsVoXjqaBf7dsHwxBJz+p+hJEP72P+LOitA0yVs+Nzxj76FidkZE2thrmhjwGqLYiJo39opi7mAfaQ/Vg==}
+  /rollup/2.52.1:
+    resolution: {integrity: sha512-/SPqz8UGnp4P1hq6wc9gdTqA2bXQXGx13TtoL03GBm6qGRI6Hm3p4Io7GeiHNLl0BsQAne1JNYY+q/apcY933w==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -1887,8 +1887,8 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /typescript/4.3.3:
-    resolution: {integrity: sha512-rUvLW0WtF7PF2b9yenwWUi9Da9euvDRhmH7BLyBG4DCFfOJ850LGNknmRpp8Z8kXNUPObdZQEfKOiHtXuQHHKA==}
+  /typescript/4.3.4:
+    resolution: {integrity: sha512-uauPG7XZn9F/mo+7MrsRjyvbxFpzemRjKEZXS4AK83oP2KKOJPvb+9cO/gmnv8arWZvhnjVOXz7B49m1l0e9Ew==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
@@ -1914,7 +1914,7 @@ packages:
       '@babel/core': 7.14.6
       '@babel/parser': 7.14.6
       '@babel/plugin-transform-typescript': 7.14.6_@babel+core@7.14.6
-      '@rollup/pluginutils': 4.1.0_rollup@2.52.0
+      '@rollup/pluginutils': 4.1.0_rollup@2.52.1
       '@vue/babel-helper-vue-jsx-merge-props': 1.2.1
       '@vue/babel-preset-jsx': 1.2.4_@babel+core@7.14.6
       '@vue/component-compiler-utils': 3.2.2
@@ -1926,7 +1926,7 @@ packages:
       magic-string: 0.25.7
       prettier: 2.3.1
       querystring: 0.2.1
-      rollup: 2.52.0
+      rollup: 2.52.1
       slash: 3.0.0
       source-map: 0.7.3
       vite: 2.3.7
@@ -1956,9 +1956,9 @@ packages:
     hasBin: true
     dependencies:
       esbuild: 0.12.9
-      postcss: 8.3.4
+      postcss: 8.3.5
       resolve: 1.20.0
-      rollup: 2.52.0
+      rollup: 2.52.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
