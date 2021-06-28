@@ -47,7 +47,7 @@
     "kayran": "^0.2.2",
     "lodash-es": "^4.17.21",
     "qrcode": "^1.4.4",
-    "swiper": "^6.7.0",
+    "swiper": "^6.7.1",
     "viewerjs": "^1.10.0"
   },
   "peerDependencies": {
@@ -58,9 +58,9 @@
     "element-ui": "^2.15.2",
     "sass": "1.34.1",
     "typescript": "^4.3.4",
-    "vite": "^2.3.7",
+    "vite": "^2.3.8",
     "vite-plugin-vue2": "1.5.2",
-    "vite-plugin-windicss": "1.0.3",
+    "vite-plugin-windicss": "1.1.1",
     "vue": "2.6.12",
     "vue-template-compiler": "2.6.12",
     "windicss": "^3.1.3"
