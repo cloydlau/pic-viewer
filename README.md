@@ -173,14 +173,26 @@ Preview manually, no external display
 
 ## 二维码清晰度
 
-默认图片的style高度为148px（与 `el-upload` 保持一致），而qrcode的分辨率为 `444×444`（三倍图），如果你修改了样式，增大了宽高，可能导致图片模糊
+默认的图片css高度为148px（与 `el-upload` 保持一致），默认的二维码分辨率为444×444（三倍图），如果你增大了图片的css尺寸，将导致图片变模糊
 
-```html
+解决：将二维码分辨率设置为展示尺寸的三倍
 
-<PicViewer :qrcodeProps="{
-  width: 1000,
-  height: 1000 
-}"/>
+```vue
+<!-- 示例 -->
+
+<template>
+  <PicViewer :qrcodeProps="{
+    width: 900,
+    height: 900 
+  }"/>
+</template>
+
+<style scoped>
+::v-deep .pic-viewer img {
+  width: 300px;
+  height: 300px;
+}
+</style>
 ```
 
 <br>
